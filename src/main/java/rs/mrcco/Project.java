@@ -34,7 +34,7 @@ import rs.mrcco.gui.ButtonFactory;
 public class Project extends Application {
 
 	Image image;
-	ImageView iv = new ImageView();
+	ImageView imageView = new ImageView();
 	int i = 0;
 	
 	Image[] previousImages = new Image[100];
@@ -68,9 +68,9 @@ public class Project extends Application {
 		mainPane.setRight(toolBar);
 
 		var initialImage = new Image("http://oi61.tinypic.com/123ljdx.jpg");
-		iv.setImage(initialImage);
-		iv.setFitHeight(800);
-		iv.setFitWidth(1320);
+		imageView.setImage(initialImage);
+		imageView.setFitHeight(800);
+		imageView.setFitWidth(1320);
 
 		loadMenuItem.setOnAction(arg0 -> {
 			FileChooser fileChooser = new FileChooser();
@@ -83,12 +83,12 @@ public class Project extends Application {
 				InputStream inputStream = new FileInputStream(path);
 				image = new Image(inputStream);
 				previousImages[0] = image;
-				iv.setImage(image);
-				iv.setFitHeight(1024);
-				iv.setFitHeight(720);
-				iv.setPreserveRatio(true);
-				iv.setSmooth(true);
-				iv.setCache(true);
+				imageView.setImage(image);
+				imageView.setFitHeight(1024);
+				imageView.setFitHeight(720);
+				imageView.setPreserveRatio(true);
+				imageView.setSmooth(true);
+				imageView.setCache(true);
 
 			} catch (FileNotFoundException ex) {
 				Logger.getLogger(Project.class.getName()).log(
@@ -116,19 +116,16 @@ public class Project extends Application {
 			}
 		});
 
-		mainPane.setCenter((iv));
+		mainPane.setCenter((imageView));
 
 		var backButton = ButtonFactory.createDefaultButton("Back", e -> {
 			if (i  > 1) {
-				iv.setImage(previousImages[--i]);
+				imageView.setImage(previousImages[--i]);
 
 			} else {
-				iv.setImage(previousImages[0]);
+				imageView.setImage(previousImages[0]);
 				i = 0;
 			}
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
 		});
 		toolBar.getItems().add(backButton);
 
@@ -136,10 +133,7 @@ public class Project extends Application {
 
 			Image newImage = negativeTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
-			iv.setImage(newImage);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(newImage);
 
 		});
 		toolBar.getItems().add(negativeButton);
@@ -148,10 +142,7 @@ public class Project extends Application {
 
 			Image newImage = grayscaleTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
-			iv.setImage(newImage);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(newImage);
 
 		});
 		toolBar.getItems().add(grayscaleButton);
@@ -160,10 +151,7 @@ public class Project extends Application {
 
 			Image newImage = thresholdTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
-			iv.setImage(newImage);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(newImage);
 
 		});
 		toolBar.getItems().add(thresholdButton);
@@ -172,10 +160,7 @@ public class Project extends Application {
 
 			Image newImage = solarisTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
-			iv.setImage(newImage);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(newImage);
 
 		});
 		toolBar.getItems().add(solarisButton);
@@ -185,10 +170,7 @@ public class Project extends Application {
 
 			Image newImage = redTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
-			iv.setImage(newImage);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(newImage);
 
 		});
 		toolBar.getItems().add(gammaButton);
@@ -197,11 +179,7 @@ public class Project extends Application {
 
 			Image newImage = edgesTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
-			iv.setImage(newImage);
-
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(newImage);
 
 		});
 		toolBar.getItems().add(edgesButton);
@@ -209,12 +187,7 @@ public class Project extends Application {
 		//horizontal mirror
 		var verticalMirrorButton = ButtonFactory.createDefaultButton("Mirror1", e -> {
 
-			iv.setImage(verticalMirror(image));
-			iv.setFitHeight(800);
-			iv.setFitWidth(1320);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(verticalMirror());
 
 		});
 		toolBar.getItems().add(verticalMirrorButton);
@@ -223,36 +196,21 @@ public class Project extends Application {
 		//vertical mirror
 		var horizontalMirrorButton = ButtonFactory.createDefaultButton("Mirror2", e -> {
 
-			iv.setImage(horizontalMirror(image));
-			iv.setFitHeight(800);
-			iv.setFitWidth(1320);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(horizontalMirror());
 
 		});
 		toolBar.getItems().add(horizontalMirrorButton);
 
 		var sharpenButton = ButtonFactory.createDefaultButton("Sharpen", e  -> {
 
-			iv.setImage(sharpen(image));
-			iv.setFitHeight(800);
-			iv.setFitWidth(1320);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(sharpen(image));
 
 		});
 		toolBar.getItems().add(sharpenButton);
 
 		Button blurButton = ButtonFactory.createDefaultButton("Blur", e -> {
 
-			iv.setImage(blur(image));
-			iv.setFitHeight(800);
-			iv.setFitWidth(1320);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(blur());
 
 		});
 		toolBar.getItems().add(blurButton);
@@ -262,24 +220,14 @@ public class Project extends Application {
 
 			Image newImage = redTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
-
-			iv.setImage(newImage);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
+			imageView.setImage(newImage);
 
 		});
 		toolBar.getItems().add(makeRedderButton);
 
 
 		Button sepiaButton = ButtonFactory.createDefaultButton("Sepia", e -> {
-			iv.setImage(sepia(image));
-			iv.setFitHeight(800);
-			iv.setFitWidth(1320);
-			iv.setPreserveRatio(true);
-			iv.setSmooth(true);
-			iv.setCache(true);
-
+			imageView.setImage(sepia());
 		});
 		toolBar.getItems().add(sepiaButton);
 
@@ -345,12 +293,12 @@ public class Project extends Application {
 
 
 
-	private Image blur(Image image) {
+	private Image blur() {
 		PixelReader pixelReader = image.getPixelReader();
-		WritableImage wImage = new WritableImage((int) this.image.getWidth(), (int) this.image.getHeight());
+		WritableImage wImage = new WritableImage((int) image.getWidth(), (int) image.getHeight());
 		PixelWriter pixelWriter = wImage.getPixelWriter();
-		for (int readY = 4; readY < this.image.getHeight() - 4; readY++) {
-			for (int readX = 4; readX < this.image.getWidth() - 4; readX++) {
+		for (int readY = 4; readY < image.getHeight() - 4; readY++) {
+			for (int readX = 4; readX < image.getWidth() - 4; readX++) {
 				Color color = pixelReader.getColor(readX, readY);
 
 				Color c1 = pixelReader.getColor(readX - 4, readY - 4);
@@ -391,15 +339,15 @@ public class Project extends Application {
 
 	
 
-	private Image verticalMirror(Image image) {
+	private Image verticalMirror() {
 		PixelReader pixelReader = image.getPixelReader();
-		WritableImage wImage = new WritableImage((int) this.image.getWidth(),
-				(int) this.image.getHeight());
+		WritableImage wImage = new WritableImage((int) image.getWidth(),
+				(int) image.getHeight());
 		PixelWriter pixelWriter = wImage.getPixelWriter();
-		for (int readY = 1; readY < this.image.getHeight() - 1; readY++) {
-			for (int readX = 1; readX < this.image.getWidth() - 1; readX++) {
+		for (int readY = 1; readY < image.getHeight() - 1; readY++) {
+			for (int readX = 1; readX < image.getWidth() - 1; readX++) {
 				Color color = pixelReader.getColor(readX, readY);
-				pixelWriter.setColor(readX, (int) (this.image.getHeight() - readY),
+				pixelWriter.setColor(readX, (int) (image.getHeight() - readY),
 						color);
 
 			}
@@ -409,15 +357,15 @@ public class Project extends Application {
 		return wImage;
 	}
 
-	private Image horizontalMirror(Image image) {
+	private Image horizontalMirror() {
 		PixelReader pixelReader = image.getPixelReader();
-		WritableImage wImage = new WritableImage((int) this.image.getWidth(),
-				(int) this.image.getHeight());
+		WritableImage wImage = new WritableImage((int) image.getWidth(),
+				(int) image.getHeight());
 		PixelWriter pixelWriter = wImage.getPixelWriter();
-		for (int readY = 1; readY < this.image.getHeight() - 1; readY++) {
-			for (int readX = 1; readX < this.image.getWidth() - 1; readX++) {
+		for (int readY = 1; readY < image.getHeight() - 1; readY++) {
+			for (int readX = 1; readX < image.getWidth() - 1; readX++) {
 				Color color = pixelReader.getColor(readX, readY);
-				pixelWriter.setColor((int) (this.image.getWidth() - readX), readY,
+				pixelWriter.setColor((int) (image.getWidth() - readX), readY,
 						color);
 
 			}
@@ -428,13 +376,13 @@ public class Project extends Application {
 	}
 
 
-	private Image sepia(Image image) {
+	private Image sepia() {
 		PixelReader pixelReader = image.getPixelReader();
-		WritableImage wImage = new WritableImage((int) this.image.getWidth(),
-				(int) this.image.getHeight());
+		WritableImage wImage = new WritableImage((int) image.getWidth(),
+				(int) image.getHeight());
 		PixelWriter pixelWriter = wImage.getPixelWriter();
-		for (int readY = 0; readY < this.image.getHeight(); readY++) {
-			for (int readX = 0; readX < this.image.getWidth(); readX++) {
+		for (int readY = 0; readY < image.getHeight(); readY++) {
+			for (int readX = 0; readX < image.getWidth(); readX++) {
 				Color color = pixelReader.getColor(readX, readY);
 
 				Color c = new Color(

@@ -18,21 +18,21 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToolBar;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import rs.mrcco.effects.*;
+import rs.mrcco.gui.ButtonFactory;
 
 public class Project extends Application {
+
 	Image image;
 	ImageView iv = new ImageView();
 	int i = 0;
@@ -117,20 +117,8 @@ public class Project extends Application {
 		});
 
 		mainPane.setCenter((iv));
-		var backButtonImage = new Image("http://cssnerd.com/wp-content/uploads/2013/03/Screen-Shot-2013-03-09-at-22.13.01-600x367.png");
-		var backButtonIMageView = new ImageView();
-		backButtonIMageView.setFitHeight(30);
-		backButtonIMageView.setFitWidth(70);
-		backButtonIMageView.setImage(backButtonImage);
-		Button back = new Button();
-		DropShadow shadow = new DropShadow();
-		back.setStyle("-fx-font: 16 cambria; -fx-base: #ffa500;");
-		back.setMaxSize(70, 30);
-		back.setGraphic(backButtonIMageView);
-		back.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> back.setEffect(shadow));
 
-		back.addEventHandler(MouseEvent.MOUSE_EXITED, e -> back.setEffect(null));
-		back.setOnAction(arg0 -> {
+		var backButton = ButtonFactory.createDefaultButton("Back", e -> {
 			if (i  > 1) {
 				iv.setImage(previousImages[--i]);
 
@@ -142,11 +130,9 @@ public class Project extends Application {
 			iv.setSmooth(true);
 			iv.setCache(true);
 		});
-		toolBar.getItems().add(back);
+		toolBar.getItems().add(backButton);
 
-		var negativeButton = new Button("Negative");
-		negativeButton.setMaxSize(90, 10);
-		negativeButton.setOnAction(arg0 -> {
+		var negativeButton = ButtonFactory.createDefaultButton("Negative",e -> {
 
 			Image newImage = negativeTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
@@ -158,12 +144,7 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(negativeButton);
 
-		negativeButton.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> negativeButton.setEffect(shadow));
-		negativeButton.addEventHandler(MouseEvent.MOUSE_EXITED, e -> negativeButton.setEffect(null));
-
-		var grayscaleButton = new Button("Grayscale");
-		grayscaleButton.setMaxSize(90, 10);
-		grayscaleButton.setOnAction(arg0 -> {
+		var grayscaleButton = ButtonFactory.createDefaultButton("Grayscale", e-> {
 
 			Image newImage = grayscaleTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
@@ -175,13 +156,7 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(grayscaleButton);
 
-		grayscaleButton.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> grayscaleButton.setEffect(shadow));
-
-		grayscaleButton.addEventHandler(MouseEvent.MOUSE_EXITED, e -> grayscaleButton.setEffect(null));
-
-		Button thresholdButton = new Button("Threshold");
-		thresholdButton.setMaxSize(90, 10);
-		thresholdButton.setOnAction(arg0 -> {
+		var thresholdButton = ButtonFactory.createDefaultButton("Threshold", e -> {
 
 			Image newImage = thresholdTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
@@ -193,12 +168,7 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(thresholdButton);
 
-		thresholdButton.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> thresholdButton.setEffect(shadow));
-		thresholdButton.addEventHandler(MouseEvent.MOUSE_EXITED, e -> thresholdButton.setEffect(null));
-
-		Button solarisButton = new Button("Solaris");
-		solarisButton.setMaxSize(90, 10);
-		solarisButton.setOnAction(arg0 -> {
+		var solarisButton = ButtonFactory.createDefaultButton("Solaris", e -> {
 
 			Image newImage = solarisTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
@@ -210,15 +180,8 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(solarisButton);
 
-		solarisButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> solarisButton.setEffect(shadow));
 
-		solarisButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> solarisButton.setEffect(null));
-
-		Button gammaButton = new Button("Gamma");
-		gammaButton.setMaxSize(90, 10);
-		gammaButton.setOnAction(arg0 -> {
+		var gammaButton = ButtonFactory.createDefaultButton("Gamma", e -> {
 
 			Image newImage = redTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
@@ -230,22 +193,12 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(gammaButton);
 
-		gammaButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> gammaButton.setEffect(shadow));
-
-		gammaButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> gammaButton.setEffect(null));
-
-		Button edgesButton = new Button("Edges");
-		edgesButton.setMaxSize(90, 10);
-		edgesButton.setOnAction(arg0 -> {
+		var edgesButton = ButtonFactory.createDefaultButton("Edges", e -> {
 
 			Image newImage = edgesTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
 			iv.setImage(newImage);
 
-			//iv.setFitHeight(800);
-			//iv.setFitWidth(1320);
 			iv.setPreserveRatio(true);
 			iv.setSmooth(true);
 			iv.setCache(true);
@@ -253,17 +206,8 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(edgesButton);
 
-		edgesButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> edgesButton.setEffect(shadow));
-
-		edgesButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> edgesButton.setEffect(null));
-
-		
 		//horizontal mirror
-		Button verticalMirrorButton = new Button("Mirror1");
-		verticalMirrorButton.setMaxSize(90, 10);
-		verticalMirrorButton.setOnAction(arg0 -> {
+		var verticalMirrorButton = ButtonFactory.createDefaultButton("Mirror1", e -> {
 
 			iv.setImage(verticalMirror(image));
 			iv.setFitHeight(800);
@@ -275,16 +219,9 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(verticalMirrorButton);
 
-		verticalMirrorButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> verticalMirrorButton.setEffect(shadow));
-
-		verticalMirrorButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> verticalMirrorButton.setEffect(null));
 
 		//vertical mirror
-		Button horizontalMirrorButton = new Button("Mirror2");
-		horizontalMirrorButton.setMaxSize(90, 10);
-		horizontalMirrorButton.setOnAction(arg0 -> {
+		var horizontalMirrorButton = ButtonFactory.createDefaultButton("Mirror2", e -> {
 
 			iv.setImage(horizontalMirror(image));
 			iv.setFitHeight(800);
@@ -296,15 +233,7 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(horizontalMirrorButton);
 
-		horizontalMirrorButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> horizontalMirrorButton.setEffect(shadow));
-
-		horizontalMirrorButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> horizontalMirrorButton.setEffect(null));
-
-		Button sharpenButton = new Button("Sharpen");
-		sharpenButton.setMaxSize(90, 10);
-		sharpenButton.setOnAction(arg0 -> {
+		var sharpenButton = ButtonFactory.createDefaultButton("Sharpen", e  -> {
 
 			iv.setImage(sharpen(image));
 			iv.setFitHeight(800);
@@ -316,15 +245,7 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(sharpenButton);
 
-		sharpenButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> sharpenButton.setEffect(shadow));
-
-		sharpenButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> sharpenButton.setEffect(null));
-
-		Button blurButton = new Button("Blur");
-		blurButton.setMaxSize(90, 10);
-		blurButton.setOnAction(arg0 -> {
+		Button blurButton = ButtonFactory.createDefaultButton("Blur", e -> {
 
 			iv.setImage(blur(image));
 			iv.setFitHeight(800);
@@ -336,15 +257,8 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(blurButton);
 
-		blurButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> blurButton.setEffect(shadow));
 
-		blurButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> blurButton.setEffect(null));
-
-		var makeRedderButton = new Button("Redden");
-		makeRedderButton.setMaxSize(90, 10);
-		makeRedderButton.setOnAction(arg0 -> {
+		var makeRedderButton = ButtonFactory.createDefaultButton("Redden",e  -> {
 
 			Image newImage = redTest.effect(previousImages[i]);
 			previousImages[++i] = newImage;
@@ -357,15 +271,8 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(makeRedderButton);
 
-		makeRedderButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> makeRedderButton.setEffect(shadow));
 
-		makeRedderButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> makeRedderButton.setEffect(null));
-
-		Button sepiaButton = new Button("Sepia");
-		sepiaButton.setMaxSize(90, 10);
-		sepiaButton.setOnAction(arg0 -> {
+		Button sepiaButton = ButtonFactory.createDefaultButton("Sepia", e -> {
 			iv.setImage(sepia(image));
 			iv.setFitHeight(800);
 			iv.setFitWidth(1320);
@@ -376,11 +283,6 @@ public class Project extends Application {
 		});
 		toolBar.getItems().add(sepiaButton);
 
-		sepiaButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-				e -> sepiaButton.setEffect(shadow));
-
-		sepiaButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-				e -> sepiaButton.setEffect(null));
 
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		stage.setX(primaryScreenBounds.getMinX());
